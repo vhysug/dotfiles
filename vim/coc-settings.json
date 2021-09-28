@@ -1,0 +1,14 @@
+{
+  "languageserver": {
+      "golang": {
+          "command": "gopls",
+          "trace.server": "verbose",
+          "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+          "filetypes": ["go"]
+      }
+  },
+  "python.condaPath": "Documents/workspace/local/miniconda3/bin/conda",
+  "python.linting.pylintPath": "/Users/ug/Documents/workspace/local/miniconda3/envs/py2/bin/pylint",
+  "python.linting.enabled": true,
+  "python.pythonPath": ["/Users/ug/Documents/workspace/py/courseware27"]
+}
