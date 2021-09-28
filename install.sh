@@ -5,13 +5,19 @@ then
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
-mkdir -p ~/Documents/workspace/local/
-cd ~/Documents/workspace/local/
+if [ -d ~/Documents/ ]
+then
+    mkdir -p ~/Documents/workspace/local/
+    cd ~/Documents/workspace/local/
+else
+    mkdir -p ~/workspace/local/
+    cd ~/workspace/local/
+fi
 
 git clone https://github.com/vhysug/dotfiles.git
 
-curl -fLo vim/autoload/plug.vim --create-dirs \
+curl -fLo dotfiles/vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-ls -s `pwd`/dotfiles/tmux.conf ~/.tmux.conf
-ls -s `pwd`/vim ~/.vim
+ln -s `pwd`/dotfiles/tmux.conf ~/.tmux.conf
+ln -s `pwd`/dotfiles/vim ~/.vim
 

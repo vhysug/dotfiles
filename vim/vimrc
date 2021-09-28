@@ -144,7 +144,7 @@ endif
 " ============================ theme and status line ============================
 
 " theme
-" set background=dark
+set background=dark
 colorscheme gruvbox
 
 " set mark column color
