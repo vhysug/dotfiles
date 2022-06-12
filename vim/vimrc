@@ -1,28 +1,23 @@
-
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'itchyny/vim-cursorword'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'morhetz/gruvbox'
 Plug 'majutsushi/tagbar'
+Plug 'dracula/vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
-Plug 'ntpeters/vim-better-whitespace'
-" Plug 'ycm-core/YouCompleteMe'
+Plug 'joshdick/onedark.vim'
+Plug 'itchyny/lightline.vim'
+" Plug ''
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 call plug#end()
 
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gr <Plug>(coc-references)
-nnoremap <C-p> :GFiles<CR>
 " leader
 " let mapleader = ','
 " let g:mapleader = ','
@@ -48,7 +43,6 @@ set shortmess=atI
 set magic                       " For regular expressions turn magic on
 set title                       " change the terminal's title
 set nobackup                    " do not keep a backup file
-
 set novisualbell                " turn off visual bell
 set noerrorbells                " don't beep
 set visualbell t_vb=            " turn off error beep/flash
@@ -57,24 +51,27 @@ set tm=500
 
 
 " show location
-set cursorcolumn
-set cursorline
+" set cursorcolumn
+" highlight Pmenu          ctermfg=0 ctermbg=0 guibg=Magenta
+" set cursorline
 
 
 " movement
-set scrolloff=7                 " keep 3 lines when scrolling
+" set scrolloff=7                 " keep 3 lines when scrolling
 
+set undofile
+set undodir=~/.config/nvim/undodir
 
 " show
-set ruler                       " show the current row and column
+" set ruler                       " show the current row and column
 set number                      " show line numbers
-set relativenumber
 set nowrap
 set showcmd                     " display incomplete commands
 set showmode                    " display current modes
 set showmatch                   " jump to matches when entering parentheses
 set matchtime=2                 " tenths of a second to show the matching parenthesis
 
+inoremap {<CR> {<CR>}<ESC>O
 
 " search
 set hlsearch                    " highlight searches
@@ -145,8 +142,9 @@ endif
 " ============================ theme and status line ============================
 
 " theme
-set background=dark
-colorscheme gruvbox
+" set background=dark
+colorscheme onedark
+let g:airline_theme='onedark'
 
 " set mark column color
 hi! link SignColumn   LineNr
@@ -155,7 +153,7 @@ hi! link ShowMarksHLu DiffChange
 set tags=./.tags;,.tags
 " status line
 " set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
-set laststatus=2   " Always show the status line - use 2 lines for the status bar
+" set laststatus=2   " Always show the status line - use 2 lines for the status bar
 
 
 " ============================ specific file type ===========================
@@ -163,7 +161,7 @@ set laststatus=2   " Always show the status line - use 2 lines for the status ba
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 autocmd BufRead,BufNew *.md,*.mkd,*.markdown  set filetype=markdown.mkd
 
-autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
+autocmd BufNewFile *.sh,*.py exec ":call AutoSetjileHead()"
 function! AutoSetFileHead()
     " .sh
     if &filetype == 'sh'
@@ -207,12 +205,6 @@ nnoremap U <C-r>
 " column, so swap them
 
 
-"Keep search pattern at the center of the screen."
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
 
 " remove highlight
 noremap <silent><leader>/ :nohls<CR>
@@ -229,8 +221,9 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 nnoremap <leader>3 :NERDTreeToggle<CR>
 nnoremap <leader>4 :TagbarToggle<CR>
-nnoremap <leader>f :GFiles<CR>
-nnoremap <leader>s :Ag<CR>
+nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>s <cmd>Telescope live_grep<cr>
+nnoremap <leader>b <cmd>Telescope buffers<cr>
 
 
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
